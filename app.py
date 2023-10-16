@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os
 from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -8,7 +8,7 @@ from models import db, User, Course, Enrollment, CourseContent
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///elearning.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 api = Api(app)
@@ -268,4 +268,4 @@ api.add_resource(CourseContentListResource, '/contents')
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, host=0.0.0.0)
+        app.run(debug=True)
