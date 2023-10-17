@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
-from flask_cors import CORS
 from flask_restful import Api, Resource
 from models import db, User, Course, Enrollment, CourseContent
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -12,7 +11,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 api = Api(app)
 migrate = Migrate(app, db)
-CORS(app)
 
 
 # routes
@@ -212,7 +210,6 @@ class CourseContentResource(Resource):
         if content:
             return jsonify(content.as_dict())
         return {'message': 'CourseContent not found'}, 404
-# new
     def put(self, content_id):
         content = CourseContent.query.get(content_id)
         if content:
