@@ -212,7 +212,7 @@ class CourseContentResource(Resource):
         if content:
             return jsonify(content.as_dict())
         return {'message': 'CourseContent not found'}, 404
-
+# new
     def put(self, content_id):
         content = CourseContent.query.get(content_id)
         if content:
